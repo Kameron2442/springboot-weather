@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <appender name = "STOUT_CONSOLE_JSON" class = "ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %-5level %C: %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STOUT_CONSOLE_JSON" />
+    </root>
+
+</configuration>
