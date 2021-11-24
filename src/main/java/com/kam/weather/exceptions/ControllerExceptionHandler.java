@@ -13,13 +13,11 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler({BusinessException.class})
+    @ExceptionHandler({Exception.class})
     protected ResponseEntity handleApplicationException(Exception ex, WebRequest request){
 
         log.info("---------------------------im-error----------------------------------");
         log.error("Error thrown: ", ex);
-
-
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -28,10 +26,10 @@ public class ControllerExceptionHandler {
         if(ex instanceof BusinessException){
             status = HttpStatus.BAD_REQUEST;
         }else{
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            status = HttpStatus.EXPECTATION_FAILED;
         }
 
-        return new ResponseEntity<Object>("Heyyyyooo", headers, status);
+        return new ResponseEntity<Object>("Whoops something broke", headers, status);
 
     }
 
