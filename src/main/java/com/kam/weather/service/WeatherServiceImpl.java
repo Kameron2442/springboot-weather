@@ -65,7 +65,7 @@ public class WeatherServiceImpl implements WeatherService {
 
         Ageify age = ageAPI.getAge(name);
 
-        return "Sup";
+        return "Age of " + age.getName() + " is probably: " + age.getAge();
 
     }
 
