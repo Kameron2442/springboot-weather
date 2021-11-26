@@ -1,7 +1,9 @@
 package com.kam.weather.service;
 
+import com.kam.weather.model.Ageify;
 import com.kam.weather.model.Weather;
 import com.kam.weather.repository.WeatherRepository;
+import com.kam.weather.rest.AgeifyAPI;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,13 @@ public class WeatherServiceImpl implements WeatherService {
 
 
     private WeatherRepository weatherRepository;
+    private AgeifyAPI ageAPI;
+
 
     @Autowired
-    public WeatherServiceImpl (final WeatherRepository weatherRepository){
+    public WeatherServiceImpl (final WeatherRepository weatherRepository, AgeifyAPI ageAPI){
         this.weatherRepository = weatherRepository;
+        this.ageAPI = ageAPI;
     }
 
     @Override
@@ -46,6 +51,24 @@ public class WeatherServiceImpl implements WeatherService {
 
         return temps;
     };
+
+    @Override
+    public String simulateRESTErrors(final Long id){
+
+
+
+        return "Works!";
+    };
+
+    @Override
+    public String getAgeOfName(final String name){
+
+        Ageify age = ageAPI.getAge(name);
+
+        return "Sup";
+
+    }
+
 
 
 }
