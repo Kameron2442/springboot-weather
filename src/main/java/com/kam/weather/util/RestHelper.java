@@ -20,7 +20,9 @@ public class RestHelper {
         return new HttpEntity<>("Hello World", headers);
     }
 
-    public static final String uriBuilder(String url, MultiValueMap<String,String> mapParams, Map<String,String> mapPathVars){
+    public static final String uriBuilder(String url,
+                                          MultiValueMap<String,String> mapParams,
+                                          Map<String,String> mapPathVars){
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
 
@@ -29,7 +31,7 @@ public class RestHelper {
         }
 
         if(mapPathVars != null && mapPathVars.isEmpty() == false){
-            builder.buildAndExpand(mapPathVars);
+            return builder.buildAndExpand(mapPathVars).toUriString();
         }
 
         return builder.toUriString();

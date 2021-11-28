@@ -1,16 +1,18 @@
 package com.kam.weather.controller;
 
-import com.kam.weather.model.Ageify;
 import com.kam.weather.model.Greeting;
+import com.kam.weather.model.HttpStatus;
 import com.kam.weather.model.Weather;
 import com.kam.weather.service.WeatherService;
-import com.sun.source.tree.TryTree;
+import com.kam.weather.util.RestHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -57,7 +59,35 @@ public class WeatherController {
 
     @GetMapping("/age/{name}")
     public String simulateRESTErrors(@PathVariable("name") String name) {
+        System.out.println("break here pls");
         return weatherService.getAgeOfName(name);
+    }
+
+    @GetMapping("/error-codes")
+    public String errorCodes(@Valid @RequestBody HttpStatus status) {
+        return weatherService.errorCodes(status.getErrorCode());
+    }
+
+    @GetMapping("/test")
+    public String smallTest() {
+
+        String code = "hellooooo";
+        String httpStatAPI = "https://httpstat.us/{codee}";
+
+        Map<String,String> pathVars = new HashMap<String, String>();
+        pathVars.put("codee", code);
+
+        MultiValueMap<String,String> queryParams = new LinkedMultiValueMap<String,String>();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(httpStatAPI);
+        builder.buildAndExpand(pathVars);
+//        return builder.toUriString();
+
+        //UriComponentsBuilder builderTwo = UriComponentsBuilder.fromHttpUrl(httpStatAPI).buildAndExpand(pathVars);
+
+
+        return builder
+                .buildAndExpand(pathVars)
+                .toUriString();
     }
 
 }

@@ -16,4 +16,6 @@ public interface WeatherService {
 
     String getAgeOfName(final String name);
 
+    String errorCodes(final Long code);
+
 }

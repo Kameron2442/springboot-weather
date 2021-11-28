@@ -4,6 +4,7 @@ import com.kam.weather.model.Ageify;
 import com.kam.weather.model.Weather;
 import com.kam.weather.repository.WeatherRepository;
 import com.kam.weather.rest.AgeifyAPI;
+import com.kam.weather.rest.HttpstatAPI;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,14 @@ public class WeatherServiceImpl implements WeatherService {
 
     private WeatherRepository weatherRepository;
     private AgeifyAPI ageAPI;
+    private HttpstatAPI statAPI;
 
 
     @Autowired
-    public WeatherServiceImpl (final WeatherRepository weatherRepository, AgeifyAPI ageAPI){
+    public WeatherServiceImpl (final WeatherRepository weatherRepository, AgeifyAPI ageAPI, HttpstatAPI statAPI){
         this.weatherRepository = weatherRepository;
         this.ageAPI = ageAPI;
+        this.statAPI = statAPI;
     }
 
     @Override
@@ -66,6 +69,15 @@ public class WeatherServiceImpl implements WeatherService {
         Ageify age = ageAPI.getAge(name);
 
         return "Age of " + age.getName() + " is probably: " + age.getAge();
+
+    }
+
+    @Override
+    public String errorCodes(final Long code){
+
+        String rsvp = statAPI.getCode(String.valueOf(code));
+
+        return rsvp;
 
     }
 
