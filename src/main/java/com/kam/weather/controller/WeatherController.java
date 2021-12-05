@@ -3,6 +3,7 @@ package com.kam.weather.controller;
 import com.kam.weather.model.Greeting;
 import com.kam.weather.model.HttpStatus;
 import com.kam.weather.model.Weather;
+import com.kam.weather.model.WeatherList;
 import com.kam.weather.service.WeatherService;
 import com.kam.weather.util.RestHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,12 @@ public class WeatherController {
         System.out.println(id);
         return weatherService.getWeatherById(id);
     }
+
+    @GetMapping("/forecast")
+    public WeatherList getForecast(@RequestParam(value = "specific-temp", required = false) Long filterTemp) {
+        return weatherService.getForecast(filterTemp);
+    }
+
 
     @GetMapping("/feels-like-temp/{id}")
     public String getFeelsLikeTemp(@PathVariable("id") Long id) {

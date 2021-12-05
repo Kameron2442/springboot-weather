@@ -2,6 +2,7 @@ package com.kam.weather.service;
 
 import com.kam.weather.model.Ageify;
 import com.kam.weather.model.Weather;
+import com.kam.weather.model.WeatherList;
 import com.kam.weather.repository.WeatherRepository;
 import com.kam.weather.rest.AgeifyAPI;
 import com.kam.weather.rest.HttpstatAPI;
@@ -12,6 +13,7 @@ import com.kam.weather.exceptions.BusinessException;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,6 +35,24 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public Weather getWeatherById(final Long id) {
         return weatherRepository.findByid(id);
+    }
+
+    @Override
+    public WeatherList getForecast(final Long filterTemp) {
+
+        WeatherList forecast = new WeatherList( weatherRepository.findAll() );
+
+        if(forecast != null){
+
+            forecast.setWeathers(
+                    forecast.getWeathers().stream()
+                                .filter(weather -> weather.getTemp() == filterTemp)
+                                .collect(Collectors.toList())
+            );
+
+        }
+
+        return forecast;
     }
 
     @Override
