@@ -40,7 +40,7 @@ public class RestHelperTest {
         String result = RestHelper.uriBuilder(baseUrlPathvar, queryParams, pathVars);
         Assertions.assertEquals(expectedResult, result);
     }
-//
+
 //    @Test
 //    void UriBuilder_multipleParams(){
 //
